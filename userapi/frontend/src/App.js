@@ -1,6 +1,7 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import UserList from './components/User';
 
 class App extends React.Component {
   constructor(props) {
@@ -10,10 +11,30 @@ class App extends React.Component {
     }
   }
 
+componentDidMount(){
+  const users = [
+    {
+      'firstname': 'Vadim',
+      'lastname': 'Prosvirnov',
+      'email': 'mback.edu@gmail.com'
+    },
+    {
+      'firstname': 'User',
+      'lastname': 'Superuser',
+      'email': 'anyuser@gmail.com'
+    }
+  ]
+  this.setState(
+    {
+      'users': users
+    }
+  )
+}
+
   render() {
     return (
       <div>
-        Main App
+        <UserList users={this.state.users} />
       </div>
     )
   }
