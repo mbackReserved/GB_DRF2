@@ -29,4 +29,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('users/', UserModelView.as_view()),
     path('users/<int:pk>', SingleUserView.as_view()),
+    path('userapi/', include(router.urls)),
 ]
