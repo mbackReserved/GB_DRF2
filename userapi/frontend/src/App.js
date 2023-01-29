@@ -3,6 +3,9 @@ import logo from './logo.svg';
 import './App.css';
 import UserList from './components/User';
 import axios from 'axios';
+import ProjectList from './components/Projects';
+import {HashRouter, Route} from 'react-router-dom'
+
 
 class App extends React.Component {
   constructor(props) {
@@ -12,16 +15,18 @@ class App extends React.Component {
     }
   }
 
-componentDidMount(){
-  axios.get('http://127.0.0.1:8000/userapi/users').then(response => {
-      const users = response.data
-        this.setState(
-          {
-            'users': users
-          }
-        )
-    }).catch(error => console.log(error))
-  }
+  
+  componentDidMount(){
+    axios.get('http://127.0.0.1:8000/userapi/users').then(response => {
+        const users = response.data
+          this.setState(
+            {
+              'users': users
+            }
+          )
+      }).catch(error => console.log(error))
+    }
+
 
   render() {
     return (
