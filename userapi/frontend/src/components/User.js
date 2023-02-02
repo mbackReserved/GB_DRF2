@@ -25,20 +25,20 @@ const UserList = ({users}) => {
             <thead>
                 <tr>
                     <th>
-                        User Name
+                        UserName
                     </th>
                     <th>
-                        First name
+                        Firstname
                     </th>
                     <th>
-                        Last name
+                        Lastname
                     </th>
                     <th>
-                        Email
+                        mailfield
                     </th>
                 </tr>
             </thead>
-            {users.map((user) => <UserItem user={user} />)}
+        {users.map((user) => <UserItem user={user} />)}
         </table>
     )
 }

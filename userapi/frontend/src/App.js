@@ -8,21 +8,30 @@ import {HashRouter, Route} from 'react-router-dom'
 
 
 class App extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      'users': []
+    constructor(props) {
+      super(props)
+      this.state = {
+        'items': new Array(),
+        'users': new Array()
+      }
     }
-  }
 
-  
+
   componentDidMount(){
-    axios.get('http://127.0.0.1:8000/userapi/users').then(response => {
-        const users = response.data
-          this.setState(
-            {
-              'users': users
-            }
+    axios.get('http://127.0.0.1:8000/userapi/projects/').then(response => {
+        const projects = response.data.results
+        this.setState(
+          {
+            'items': projects
+          }
+          )
+      }).catch(error => console.log(error))
+    axios.get('http://127.0.0.1:8000/users/').then(response => {
+        const users = response.data.results
+        this.setState(
+          {
+            'users': users
+          }
           )
       }).catch(error => console.log(error))
     }
@@ -31,7 +40,8 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <UserList users={this.state.users} />
+        <ProjectList items={this.state.items}/> 
+        <UserList users={this.state.users}/> 
       </div>
     )
   }

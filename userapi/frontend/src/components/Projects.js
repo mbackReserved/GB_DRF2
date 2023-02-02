@@ -19,20 +19,12 @@ const ProjectItem = ({item}) => {
 const ProjectList = ({items}) => {
     return (
         <table>
-            <thead>
-                <tr>
-                    <th>
-                        Name
-                    </th>
-                    <th>
-                        URL
-                    </th>
-                    <th>
-                        Users
-                    </th>
-                </tr>
-            </thead>
-            {items.map((item) => <ProjectItem item={item} />)}
+            <tr>
+                <th>Name</th>
+                <th>URL</th>
+                <th>Users</th>
+            </tr>
+            {items.map((project) => <ProjectItem item={project} />)}
         </table>
     )
 }

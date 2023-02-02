@@ -4,7 +4,7 @@ from .serializers import ProjectModelSerializer, ToDoModelSerializer
 from .filters import ProjectNameIncludeFilter
 from rest_framework.pagination import LimitOffsetPagination
 from rest_framework.response import Response
-from rest_framework.renderers import JSONRenderer
+from rest_framework.renderers import JSONRenderer, BrowsableAPIRenderer
 
 class ProjectLimitOffsetPagination(LimitOffsetPagination):
     default_limit = 10
@@ -13,6 +13,7 @@ class ToDoLimitOffsetPagination(LimitOffsetPagination):
     default_limit = 20
 
 class ProjectModelViewSet(ModelViewSet):
+    renderer_classes = [JSONRenderer]
     queryset = Project.objects.all()
     serializer_class = ProjectModelSerializer
     filterset_class = ProjectNameIncludeFilter

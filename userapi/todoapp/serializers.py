@@ -3,10 +3,11 @@ from .models import Project, TODO
 from userapp.serializers import UserModelSerializer, UserNameModelSerializer
 
 class ProjectModelSerializer(ModelSerializer):
-    users = UserNameModelSerializer(many=True)
+    #users = UserNameModelSerializer(many=True)
     class Meta:
         model = Project
         fields = ['name', 'url', 'users']
+        #fields = '__all__'
 
 class ProjectUrlModelSerializer(ModelSerializer):
     class Meta:
