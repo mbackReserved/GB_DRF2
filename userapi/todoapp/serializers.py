@@ -16,8 +16,8 @@ class ProjectUrlModelSerializer(ModelSerializer):
 
 
 class ToDoModelSerializer(ModelSerializer):
-    project = ProjectUrlModelSerializer()
-    author = UserNameModelSerializer()
+    #project = ProjectUrlModelSerializer()
+    #author = UserNameModelSerializer()
     class Meta:
         model = TODO
         fields = ['project', 'text', 'is_active', 'created_at', 'updated_at', 'author']

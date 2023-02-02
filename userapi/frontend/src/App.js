@@ -4,7 +4,8 @@ import './App.css';
 import UserList from './components/User';
 import axios from 'axios';
 import ProjectList from './components/Projects';
-import {HashRouter, Route, Link} from 'react-router-dom'
+import ToDoList from './components/Todo';
+import {HashRouter, Route, Link, BrowserRouter} from 'react-router-dom'
 
 
 class App extends React.Component {
@@ -12,7 +13,8 @@ class App extends React.Component {
       super(props)
       this.state = {
         'items': new Array(),
-        'users': new Array()
+        'users': new Array(),
+        'todos': new Array()
       }
     }
 
@@ -34,18 +36,28 @@ class App extends React.Component {
           }
           )
       }).catch(error => console.log(error))
+    axios.get('http://127.0.0.1:8000/userapi/todo/').then(response => {
+      const todos = response.data.results
+      this.setState(
+        {
+          'todos': todos
+        }
+        )
+      }).catch(error => console.log(error))
     }
 
 
   render() {
     return (
       <div className='App'>
-        <HashRouter>
+        <BrowserRouter>
         <nav><ul><li><Link to='/Projects'>Projects</Link></li></ul></nav>
         <nav><ul><li><Link to='/Users'>Users</Link></li></ul></nav>
-        <Route exact path='/Projects' component={() => <ProjectList items={this.state.items}/>} />
+        <nav><ul><li><Link to='/Todo'>ToDo</Link></li></ul></nav>
+        <Route exact path='/' component={() => <ProjectList items={this.state.items}/>} />
         <Route exact path='/Users' component={() => <UserList users={this.state.users}/>} />
-        </HashRouter>
+        <Route exact path='/Todo' component={() => <ToDoList todos={this.state.todos}/>} />
+        </BrowserRouter>
       </div>
     )
   }
