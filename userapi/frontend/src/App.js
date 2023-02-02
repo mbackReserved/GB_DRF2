@@ -39,9 +39,11 @@ class App extends React.Component {
 
   render() {
     return (
-      <div>
-        <ProjectList items={this.state.items}/> 
-        <UserList users={this.state.users}/> 
+      <div className='App'>
+        <HashRouter>
+        <Route exact path='/Projects' component={() => <ProjectList items={this.state.items}/>} />
+        <Route exact path='/Users' component={() => <UserList users={this.state.users}/>} />
+        </HashRouter>
       </div>
     )
   }
