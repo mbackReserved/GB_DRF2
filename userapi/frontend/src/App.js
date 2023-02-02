@@ -4,7 +4,7 @@ import './App.css';
 import UserList from './components/User';
 import axios from 'axios';
 import ProjectList from './components/Projects';
-import {HashRouter, Route} from 'react-router-dom'
+import {HashRouter, Route, Link} from 'react-router-dom'
 
 
 class App extends React.Component {
@@ -41,6 +41,8 @@ class App extends React.Component {
     return (
       <div className='App'>
         <HashRouter>
+        <nav><ul><li><Link to='/Projects'>Projects</Link></li></ul></nav>
+        <nav><ul><li><Link to='/Users'>Users</Link></li></ul></nav>
         <Route exact path='/Projects' component={() => <ProjectList items={this.state.items}/>} />
         <Route exact path='/Users' component={() => <UserList users={this.state.users}/>} />
         </HashRouter>
