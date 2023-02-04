@@ -6,6 +6,7 @@ from rest_framework.pagination import LimitOffsetPagination
 from rest_framework.response import Response
 from rest_framework.renderers import JSONRenderer, BrowsableAPIRenderer
 
+
 class ProjectLimitOffsetPagination(LimitOffsetPagination):
     default_limit = 10
 
