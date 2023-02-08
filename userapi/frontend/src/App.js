@@ -6,6 +6,7 @@ import axios from 'axios';
 import ProjectList from './components/Projects';
 import ToDoList from './components/Todo';
 import {HashRouter, Route, Link, BrowserRouter} from 'react-router-dom'
+import LoginForm from './components/Auth';
 
 
 class App extends React.Component {
@@ -54,9 +55,11 @@ class App extends React.Component {
         <nav><ul><li><Link to='/Projects'>Projects</Link></li></ul></nav>
         <nav><ul><li><Link to='/Users'>Users</Link></li></ul></nav>
         <nav><ul><li><Link to='/Todo'>ToDo</Link></li></ul></nav>
+        <nav><ul><li><Link to='/login'>Login</Link></li></ul></nav>
         <Route exact path='/' component={() => <ProjectList items={this.state.items}/>} />
         <Route exact path='/Users' component={() => <UserList users={this.state.users}/>} />
         <Route exact path='/Todo' component={() => <ToDoList todos={this.state.todos}/>} />
+        <Route exact path='/login' component={() => <LoginForm/>} />
         </BrowserRouter>
       </div>
     )
