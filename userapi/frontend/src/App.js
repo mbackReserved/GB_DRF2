@@ -7,6 +7,7 @@ import ProjectList from './components/Projects';
 import ToDoList from './components/Todo';
 import {HashRouter, Route, Link, BrowserRouter} from 'react-router-dom'
 import LoginForm from './components/Auth';
+import Cookies from 'universal-cookie'
 
 
 class App extends React.Component {
@@ -15,12 +16,46 @@ class App extends React.Component {
       this.state = {
         'items': new Array(),
         'users': new Array(),
-        'todos': new Array()
+        'todos': new Array(),
+        'token': ''
       }
     }
+  
+
+  set_token(token) {
+    const cookies = new Cookies()
+    cookies.set('token', token)
+    this.setState(({'token': token}))
+  }
+  
+
+  is_authentificated(){
+    return this.state.token != ''
+  }
+
+
+  logout() {
+    this.set_token('')
+  }
+
+
+  get_token_from_storage(){
+    const cookies = new Cookies()
+    const token = cookies.get('token')
+    this.setState({'token': token})
+  }
+
+
+  get_token(login, password) {
+    axios.post('http://127.0.0.1/api-token-auth/', {login: login, password: password})
+      .then(response => {
+        this.set_token(response.data['token'])
+      }).catch(error => alert('Wrong Pass'))
+  }
 
 
   componentDidMount(){
+    this.get_token_from_storage()
     axios.get('http://127.0.0.1:8000/userapi/projects/').then(response => {
         const projects = response.data.results
         this.setState(
