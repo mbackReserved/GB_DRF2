@@ -29,7 +29,7 @@ class App extends React.Component {
   }
   
 
-  is_authentificated(){
+  is_authentificated() {
     return this.state.token != ''
   }
 
@@ -46,8 +46,8 @@ class App extends React.Component {
   }
 
 
-  get_token(login, password) {
-    axios.post('http://127.0.0.1/api-token-auth/', {username: login, password: password})
+  get_token(username, password) {
+    axios.post('http://127.0.0.1:8000/api-token-auth/', {username: username, password: password})
       .then(response => {
         this.set_token(response.data['token'])
       }).catch(error => alert('Wrong Pass'))
@@ -67,6 +67,7 @@ class App extends React.Component {
 
 
   load_data() {
+    const headers = this.get_headers()
     axios.get('http://127.0.0.1:8000/userapi/projects/', {headers}).then(response => {
       const projects = response.data.results
       this.setState(
@@ -114,7 +115,7 @@ class App extends React.Component {
         <Route exact path='/' component={() => <ProjectList items={this.state.items}/>} />
         <Route exact path='/Users' component={() => <UserList users={this.state.users}/>} />
         <Route exact path='/Todo' component={() => <ToDoList todos={this.state.todos}/>} />
-        <Route exact path='/login' component={() => <LoginForm get_token={(login, password) => this.get_token(login, password)}/>} />
+        <Route exact path='/login' component={() => <LoginForm get_token={(username, password) => this.get_token(username, password)}/>} />
         </BrowserRouter>
       </div>
     )

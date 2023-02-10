@@ -16,7 +16,7 @@ class ToDoLimitOffsetPagination(LimitOffsetPagination):
 
 class ProjectModelViewSet(ModelViewSet):
     renderer_classes = [JSONRenderer]
-    permission_classes = IsAuthenticated
+    #permission_classes = IsAuthenticated
     queryset = Project.objects.all()
     serializer_class = ProjectModelSerializer
     filterset_class = ProjectNameIncludeFilter
@@ -25,7 +25,7 @@ class ProjectModelViewSet(ModelViewSet):
 class ToDoModelViewSet(ModelViewSet):
     queryset = TODO.objects.all()
     serializer_class = ToDoModelSerializer
-    permission_classes = IsAuthenticated
+    #permission_classes = IsAuthenticated
     filterset_fields = ['project']
     pagination_class = ToDoLimitOffsetPagination
     
