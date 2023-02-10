@@ -25,7 +25,7 @@ class App extends React.Component {
   set_token(token) {
     const cookies = new Cookies()
     cookies.set('token', token)
-    this.setState(({'token': token}))
+    this.setState({'token': token}, () => this.load_data())
   }
   
 
@@ -42,7 +42,7 @@ class App extends React.Component {
   get_token_from_storage(){
     const cookies = new Cookies()
     const token = cookies.get('token')
-    this.setState({'token': token})
+    this.setState({'token': token}, () => this.load_data())
   }
 
 
@@ -66,17 +66,16 @@ class App extends React.Component {
   }
 
 
-  componentDidMount(){
-    this.get_token_from_storage()
-    axios.get('http://127.0.0.1:8000/userapi/projects/').then(response => {
-        const projects = response.data.results
-        this.setState(
-          {
-            'items': projects
-          }
-          )
-      }).catch(error => console.log(error))
-    axios.get('http://127.0.0.1:8000/users/').then(response => {
+  load_data() {
+    axios.get('http://127.0.0.1:8000/userapi/projects/', {headers}).then(response => {
+      const projects = response.data.results
+      this.setState(
+        {
+          'items': projects
+        }
+        )
+    }).catch(error => console.log(error))
+    axios.get('http://127.0.0.1:8000/users/', {headers}).then(response => {
         const users = response.data.results
         this.setState(
           {
@@ -84,7 +83,7 @@ class App extends React.Component {
           }
           )
       }).catch(error => console.log(error))
-    axios.get('http://127.0.0.1:8000/userapi/todo/').then(response => {
+    axios.get('http://127.0.0.1:8000/userapi/todo/', {headers}).then(response => {
       const todos = response.data.results
       this.setState(
         {
@@ -94,6 +93,11 @@ class App extends React.Component {
       }).catch(error => console.log(error))
     }
 
+
+  componentDidMount() {
+    this.get_token_from_storage()
+  }
+    
 
   render() {
     return (
