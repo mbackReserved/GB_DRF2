@@ -18,6 +18,7 @@ from django.urls import path, include
 from rest_framework.routers import DefaultRouter, views
 from userapp.views import UserModelView, SingleUserView
 from todoapp.views import ProjectModelViewSet, ToDoModelViewSet
+from rest_framework.authtoken import views
 
 
 router = DefaultRouter()
