@@ -5,6 +5,7 @@ from rest_framework.test import APIRequestFactory, force_authenticate, APIClient
 from django.contrib.auth.models import User
 from .views import ProjectModelViewSet, ToDoModelViewSet
 from .models import TODO, Project
+from userapp.models import User as MyUser
 
 
 class TestProjectModelView(TestCase):
@@ -29,4 +30,24 @@ class TestProjectModelView(TestCase):
         client = APIClient()
         response = client.get(f'/userapi/todo/{todo.id}/')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+
+class TestTODOProject(APITestCase):
+    def test_create_todo(self):
+        user = MyUser.objects.create(
+            username='test',
+            firstname='test',
+            lastname='test',
+            email='test@post.com'
+        )
+        project = Project.objects.create(
+            name='testprj',
+            url='https://gb.ru/lessons/295727',
+        )
+        project.users.add(user)
+        project.save()
+        response = self.client.put(f'/userapi/projects/{project.id}/', {'name': 'newname', 'url': 'https://gb.ru/lessons/295727', 'users': user.id})
+        print(response.json())
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
 
