@@ -4,7 +4,7 @@ from rest_framework import status
 from rest_framework.test import APIRequestFactory, force_authenticate, APIClient, APISimpleTestCase, APITestCase
 from django.contrib.auth.models import User
 from .views import ProjectModelViewSet, ToDoModelViewSet
-from .models import User
+from .models import TODO, Project
 
 
 class TestProjectModelView(TestCase):
@@ -22,3 +22,11 @@ class TestProjectModelView(TestCase):
         view = ToDoModelViewSet.as_view({'post':'create'})
         response = view(request)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+    
+
+    def test_get_detail(self):
+        todo = TODO.objects.create(text='TestTODO')
+        client = APIClient()
+        response = client.get(f'/userapi/todo/{todo.id}/')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
