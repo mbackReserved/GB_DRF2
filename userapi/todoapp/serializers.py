@@ -6,8 +6,8 @@ class ProjectModelSerializer(ModelSerializer):
     #users = UserNameModelSerializer(many=True)
     class Meta:
         model = Project
-        fields = ['name', 'url', 'users']
-        #fields = '__all__'
+        #fields = ['name', 'url', 'users']
+        fields = '__all__'
 
 class ProjectUrlModelSerializer(ModelSerializer):
     class Meta:
