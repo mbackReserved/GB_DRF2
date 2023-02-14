@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'userapp',
     'todoapp',
     'django_filters',
-    'rest_framework.authtoken'
+    'rest_framework.authtoken',
+    'drf_yasg',
 ]
 
 MIDDLEWARE = [
