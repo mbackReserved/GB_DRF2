@@ -28,7 +28,8 @@ router.register('todo', ToDoModelViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('users/', UserModelView.as_view()),
+    path('users/1.1', include('userapp.urls', namespace='1.1')),
+    path('users/1.2', include('userapp.urls', namespace='1.2')),
     #path('users/<int:pk>', SingleUserView.as_view()),
     path('userapi/', include(router.urls)),
     path('api-token-auth/', views.obtain_auth_token)
