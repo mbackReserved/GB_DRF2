@@ -65,6 +65,13 @@ class App extends React.Component {
     return headers
   }
 
+  deleteProject(id) {
+    const headers = this.get_headers()
+    axios.delete(`http://127.0.0.1:8000/userapi/projects/${id}`, {headers}).then(response => {
+      this.setState({projects: this.state.projects.filter((item) => item.id !==id)})
+    }).catch(error => console.log(error))
+  }
+
 
   load_data() {
     const headers = this.get_headers()
@@ -112,7 +119,7 @@ class App extends React.Component {
           {this.is_authentificated() ? <button onClick={() => this.logout()}>Logout</button> : <Link to='/login'>Login</Link>}
         </li>
         </ul></nav>
-        <Route exact path='/' component={() => <ProjectList items={this.state.items}/>} />
+        <Route exact path='/Projects' component={() => <ProjectList items={this.state.items} deleteProject={(id) => this.deleteProject(id)} />} />
         <Route exact path='/Users' component={() => <UserList users={this.state.users}/>} />
         <Route exact path='/Todo' component={() => <ToDoList todos={this.state.todos}/>} />
         <Route exact path='/login' component={() => <LoginForm get_token={(username, password) => this.get_token(username, password)}/>} />
