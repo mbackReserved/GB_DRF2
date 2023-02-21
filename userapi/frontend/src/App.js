@@ -28,6 +28,18 @@ class App extends React.Component {
     cookies.set('token', token)
     this.setState({'token': token}, () => this.load_data())
   }
+
+  createProject(name, users) {
+    const headers = this.get_headers()
+    const data = {name: name, users:users}
+    console.log(data)
+    axios.post('http://127.0.0.1:8000/userapi/projects/', data, {headers, headers}).then(response => {
+      let new_project = response.data
+      const user = this.state.users.filter((item) => item.id === new_project.user)[0]
+      new_project.user = user
+      this.setState({projects: [...this.state.projects, new_project]})
+    }).catch(error => console.log(error))
+  }
   
 
   is_authentificated() {
@@ -84,7 +96,7 @@ class App extends React.Component {
         }
         )
     }).catch(error => console.log(error))
-    axios.get('http://127.0.0.1:8000/users/', {headers}).then(response => {
+    axios.get('http://127.0.0.1:8000/users/1.1', {headers}).then(response => {
         const users = response.data.results
         this.setState(
           {
@@ -120,7 +132,7 @@ class App extends React.Component {
           {this.is_authentificated() ? <button onClick={() => this.logout()}>Logout</button> : <Link to='/login'>Login</Link>}
         </li>
         </ul></nav>
-        <Route exact path='/Projects/create' component={() => <ProjectForm />}/>
+        <Route exact path='/Projects/create' component={() => <ProjectForm users={this.state.users} createProject={(name, user) => this.createProject(name, user)} />} />
         <Route exact path='/Projects' component={() => <ProjectList items={this.state.items} deleteProject={(id) => this.deleteProject(id)} />} />
         <Route exact path='/Users' component={() => <UserList users={this.state.users}/>} />
         <Route exact path='/Todo' component={() => <ToDoList todos={this.state.todos}/>} />

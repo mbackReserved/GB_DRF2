@@ -4,7 +4,7 @@ from userapp.models import User
 
 class Project(models.Model):
     name = models.CharField(max_length=128)
-    url = models.URLField()
+    url = models.URLField(blank=True)
     users = models.ManyToManyField(User)
 
 
