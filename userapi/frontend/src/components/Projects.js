@@ -6,6 +6,9 @@ const ProjectItem = ({item, deleteProject}) => {
     return (
         <tr>
             <td>
+                {item.id}
+            </td>
+            <td>
                 {item.name}
             </td>           
             <td>
@@ -26,6 +29,7 @@ const ProjectList = ({items, deleteProject}) => {
         <div>
         <table>
             <tr>
+                <th>ID</th>
                 <th>Name</th>
                 <th>URL</th>
                 <th>Users</th>

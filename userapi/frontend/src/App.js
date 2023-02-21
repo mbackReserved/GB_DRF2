@@ -9,6 +9,7 @@ import {HashRouter, Route, Switch, Redirect, Link, BrowserRouter} from 'react-ro
 import LoginForm from './components/Auth';
 import Cookies from 'universal-cookie'
 import ProjectForm from './components/ProjectForm'
+import TodoForm from './components/TodoForm'
 
 
 class App extends React.Component {
@@ -38,6 +39,19 @@ class App extends React.Component {
       const user = this.state.users.filter((item) => item.id === new_project.user)[0]
       new_project.user = user
       this.setState({projects: [...this.state.projects, new_project]})
+    }).catch(error => console.log(error))
+  }
+
+  createTodo(text, project) {
+    const headers = this.get_headers()
+    const data = {text:text, project:project}
+    console.log(data)
+    axios.post('http://127.0.0.1:8000/userapi/todo/', data, {headers, headers}).then(response => {
+      let new_todo = response.data
+      console.log(this.state)
+      const project = this.state.items.filter((item) => item.id === new_todo.project)[0]
+      new_todo.project = project
+      this.setState({todos: [...this.state.todos, new_todo]})
     }).catch(error => console.log(error))
   }
   
@@ -85,11 +99,19 @@ class App extends React.Component {
     }).catch(error => console.log(error))
   }
 
+  deleteTodo(id) {
+    const headers = this.get_headers()
+    axios.delete(`http://127.0.0.1:8000/userapi/todo/${id}`, {headers}).then(response => {
+      this.setState({todos: this.state.todos.filter((item) => item.id !==id)})
+    }).catch(error => console.log(error))
+  }
+
 
   load_data() {
     const headers = this.get_headers()
     axios.get('http://127.0.0.1:8000/userapi/projects/', {headers}).then(response => {
       const projects = response.data.results
+      console.log(projects)
       this.setState(
         {
           'items': projects
@@ -106,6 +128,7 @@ class App extends React.Component {
       }).catch(error => console.log(error))
     axios.get('http://127.0.0.1:8000/userapi/todo/', {headers}).then(response => {
       const todos = response.data.results
+      console.log(todos)
       this.setState(
         {
           'todos': todos
@@ -135,7 +158,8 @@ class App extends React.Component {
         <Route exact path='/Projects/create' component={() => <ProjectForm users={this.state.users} createProject={(name, user) => this.createProject(name, user)} />} />
         <Route exact path='/Projects' component={() => <ProjectList items={this.state.items} deleteProject={(id) => this.deleteProject(id)} />} />
         <Route exact path='/Users' component={() => <UserList users={this.state.users}/>} />
-        <Route exact path='/Todo' component={() => <ToDoList todos={this.state.todos}/>} />
+        <Route exact path='/Todo/create' component={() => <TodoForm projects={this.state.items} createTodo={(text, project) => this.createTodo(text, project)}/>} />
+        <Route exact path='/Todo' component={() => <ToDoList todos={this.state.todos} deleteTodo={(id) => this.deleteTodo(id)} />} />
         <Route exact path='/login' component={() => <LoginForm get_token={(username, password) => this.get_token(username, password)}/>} />
         </BrowserRouter>
       </div>
