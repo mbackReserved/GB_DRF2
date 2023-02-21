@@ -5,9 +5,10 @@ import UserList from './components/User';
 import axios from 'axios';
 import ProjectList from './components/Projects';
 import ToDoList from './components/Todo';
-import {HashRouter, Route, Link, BrowserRouter} from 'react-router-dom'
+import {HashRouter, Route, Switch, Redirect, Link, BrowserRouter} from 'react-router-dom'
 import LoginForm from './components/Auth';
 import Cookies from 'universal-cookie'
+import ProjectForm from './components/ProjectForm'
 
 
 class App extends React.Component {
@@ -119,6 +120,7 @@ class App extends React.Component {
           {this.is_authentificated() ? <button onClick={() => this.logout()}>Logout</button> : <Link to='/login'>Login</Link>}
         </li>
         </ul></nav>
+        <Route exact path='/Projects/create' component={() => <ProjectForm />}/>
         <Route exact path='/Projects' component={() => <ProjectList items={this.state.items} deleteProject={(id) => this.deleteProject(id)} />} />
         <Route exact path='/Users' component={() => <UserList users={this.state.users}/>} />
         <Route exact path='/Todo' component={() => <ToDoList todos={this.state.todos}/>} />
