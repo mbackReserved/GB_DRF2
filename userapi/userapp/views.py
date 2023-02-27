@@ -1,7 +1,7 @@
 from rest_framework.viewsets import ModelViewSet
 from .models import User
 from .serializers import UserModelSerializer, UserModelSerializerWithSuperuserAndStaff
-from rest_framework.generics import ListAPIView, RetrieveUpdateAPIView
+from rest_framework.generics import ListAPIView, RetrieveUpdateAPIView, ListCreateAPIView
 
 class UserModelView(ListAPIView):
     queryset = User.objects.all()
@@ -13,7 +13,7 @@ class SingleUserView(RetrieveUpdateAPIView):
     serializer_class = UserModelSerializer
 
 
-class UsersAPIView(ListAPIView):
+class UsersAPIView(ListCreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserModelSerializer
 

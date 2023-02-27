@@ -20,5 +20,5 @@ class ToDoModelSerializer(ModelSerializer):
     #author = UserNameModelSerializer()
     class Meta:
         model = TODO
-        fields = ['project', 'text', 'is_active', 'created_at', 'updated_at', 'author']
+        fields = '__all__'
 
