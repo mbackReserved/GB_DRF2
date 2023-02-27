@@ -25,7 +25,9 @@ SECRET_KEY = 'django-insecure-vc)3jr##-1*vz4%39esc9fz!s8wkc!h@7re%0@1*g_n9^ugolj
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    '0.0.0.0'
+]
 
 
 # Application definition
@@ -84,8 +86,12 @@ WSGI_APPLICATION = 'userapi.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'userapi',
+        'USER': 'mback',
+        'PASSWORD': 'mback123456',
+        'HOST': 'db',
+        'PORT': '5432'
     }
 }
 
